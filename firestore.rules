@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Each user has their own private expenses subcollection
+    match /users/{userId}/expenses/{expenseId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Fallback rule for guest/demo mode if auth is bypassed
+    match /expenses/{expenseId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
