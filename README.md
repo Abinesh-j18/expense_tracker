@@ -6,9 +6,7 @@ A clean, modern, and high-performance **Expense Tracker Application** built with
 
 ## 🔗 Submission & Demo Links
 - 📱 **Download Release APK**: [Google Drive Direct Download](https://drive.google.com/file/d/1ROODlnHhdegABWLgdr6S-SkRzbwVy132/view?usp=sharing)
-- 🎥 **Video Demonstration Walkthrough**:
-  - [Watch on YouTube](https://youtu.be/kq9Ys5QYYTM)
-  - [Google Drive Video Backup](https://drive.google.com/file/d/1ll76uY7A-mFdkaWEqPqpee9f878B3F2r/view?usp=sharing)
+- 🎥 **Video Demonstration Walkthrough**: [Watch Video on Google Drive](https://drive.google.com/file/d/1ll76uY7A-mFdkaWEqPqpee9f878B3F2r/view?usp=sharing)
 - 💻 **Public GitHub Repository**: [github.com/Abinesh-j18/expense_tracker](https://github.com/Abinesh-j18/expense_tracker)
 
 ---
