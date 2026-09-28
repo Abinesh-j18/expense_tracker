@@ -140,38 +140,6 @@ class SettingsScreen extends StatelessWidget {
                   title: Text('Backend'),
                   trailing: Text('Firebase Firestore & Auth', style: TextStyle(fontWeight: FontWeight.w600)),
                 ),
-                const Divider(height: 1),
-                ListTile(
-                  leading: const Icon(Icons.smart_toy_rounded, color: AppColors.primary),
-                  title: const Text('AI-Assisted Development'),
-                  subtitle: const Text('Built with Antigravity / Gemini AI pair programming'),
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                        title: const Row(
-                          children: [
-                            Icon(Icons.smart_toy_rounded, color: AppColors.primary),
-                            SizedBox(width: 8),
-                            Text('AI Tools Disclosure'),
-                          ],
-                        ),
-                        content: const Text(
-                          'In accordance with CyphLab\'s assignment instructions, modern AI tools '
-                          '(including Google Antigravity & Gemini) were effectively utilized for architectural planning, '
-                          'code structure refinement, and best-practice verification.',
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(ctx),
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
               ],
             ),
           ),
