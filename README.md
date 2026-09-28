@@ -1,32 +1,35 @@
 # 💰 Expense Tracker Mobile App
 
-A clean, modern, and high-performance **Expense Tracker Application** built with **Flutter** and **Firebase Cloud Firestore**. Developed as part of the Mobile App Developer Intern selection process for **CyphLab (Pvt) Ltd**.
+A clean, modern, and high-performance **Expense Tracker Application** built with **Flutter**, **Firebase Cloud Firestore**, and **Material 3**. Developed as part of the Mobile App Developer Intern selection process for **CyphLab**.
 
 ---
 
 ## 🌟 Key Features
 
-### 🎯 Core Features
-- [x] **Add New Expenses**: Log expenses with title, amount, category, date, and optional notes.
-- [x] **Edit Existing Expenses**: Update any existing expense seamlessly.
+### 🎯 Core Requirements
+- [x] **Add New Expenses**: Log expenses with title, amount, category, date, and optional description notes.
+- [x] **Edit Existing Expenses**: Update any existing expense seamlessly with instant real-time synchronization.
 - [x] **Delete Expenses**: Delete expenses with safety confirmation dialogs to prevent accidental loss.
-- [x] **Expense Categories**: 10 distinct categories with vibrant custom icons and colors (Food, Transport, Bills, Shopping, Groceries, Entertainment, Health, Education, Travel, Other).
+- [x] **Category Selection**: 10 distinct categories with vibrant custom icons and colors (Food & Dining, Transportation, Utilities & Bills, Shopping, Groceries, Entertainment, Healthcare, Education, Travel, Other).
+- [x] **Dynamic Category Pre-Selection**: Selecting a category filter chip on the Home screen automatically pre-selects that category when opening the Add Expense form.
 - [x] **Cloud Firestore Storage**: Real-time cloud sync with user-scoped data (`users/{userId}/expenses`).
-- [x] **Monthly Expense Summary Card**: Interactive card displaying current month spend, transaction count, top spending category, and quick month-to-month switcher.
+- [x] **Monthly Expense Summary Card**: Interactive card displaying the current month's total spend, top spending category, and quick `< Previous / Next >` month navigation.
 - [x] **Expense History & Grouping**: Chronological expense list with formatted amounts, category badges, and relative timestamps ("Today", "Yesterday").
 - [x] **Multi-Criteria Filtering**: Filter by category chips, custom date ranges, and months.
-- [x] **Form Validation**: Strict validation on inputs (valid positive amounts, required fields).
-- [x] **Comprehensive UI States**: Dedicated loading indicators, modern empty state illustrations, and actionable error banners.
+- [x] **Form Validation**: Strict validation on inputs (valid positive amounts $> 0$, required title, date validation).
+- [x] **Comprehensive Multi-State UI**: Dedicated loading indicators, modern empty state illustrations with quick action buttons, and actionable error banners with retry triggers.
 
 ### 🚀 Additional & Standout Features
 - [x] **Interactive Donut & Pie Charts**: Category breakdown visualization built with `fl_chart`.
-- [x] **Category Progress Bars**: Percentage-of-budget indicators for each category.
+- [x] **Category Progress Bars & Summaries**: Percentage-of-total indicators and amounts for each category.
 - [x] **Dark & Light Mode**: Complete Material 3 theming with persistent theme preferences using `shared_preferences`.
-- [x] **Live Search**: Real-time search bar to quickly filter expenses by title or note description.
+- [x] **Live Global Search**: Real-time search matching **title, description/notes, category names, and amounts** across all months with an instant search results counter and clear button.
 - [x] **Firebase Authentication**:
   - Email & Password Sign In and Registration.
   - **One-Tap Guest Mode (Anonymous)**: Instant access for reviewers to test all features without account registration friction!
-- [x] **Offline / Resilient Fallback**: Graceful handling when offline or before Firebase credentials are configured.
+  - **1-Click Test Credentials Autofill**: Pre-populates demo credentials for immediate testing.
+- [x] **Isolated Per-User Local Storage**: Brand-new registered accounts start with a clean empty state, while sample demo data is isolated to the demo account.
+- [x] **Custom App Logo & Launcher Icon**: Custom fintech branding across all Android mipmap resolutions.
 
 ---
 
@@ -50,27 +53,27 @@ lib/
 │   └── expense_model.dart           # Expense model with Firestore serialization
 ├── services/
 │   ├── auth_service.dart            # Firebase Authentication wrapper & guest auth
-│   └── firestore_service.dart       # Firestore CRUD with real-time stream & fallback
+│   └── firestore_service.dart       # Firestore CRUD with real-time stream & isolated local fallback
 ├── providers/
-│   ├── auth_provider.dart           # Auth state management
-│   ├── expense_provider.dart        # Expense state, filters, and calculations
+│   ├── auth_provider.dart           # Auth state management & local session caching
+│   ├── expense_provider.dart        # Expense state, filters, global search, and calculations
 │   └── theme_provider.dart          # Theme switcher with local storage persistence
 ├── widgets/
-│   ├── custom_text_field.dart       # Reusable styled text field with validation
-│   ├── empty_state_widget.dart      # Illustrated empty state placeholder
+│   ├── custom_text_field.dart       # Reusable styled text field with auto-clearing hint on focus
+│   ├── empty_state_widget.dart      # Illustrated empty state placeholder with CTA
 │   ├── loading_indicator.dart       # Centered loading state widget
 │   └── confirm_dialog.dart          # Reusable confirmation modal dialog
 ├── views/
 │   ├── auth/
-│   │   └── login_screen.dart        # Login, registration, and guest mode screen
+│   │   └── login_screen.dart        # Segmented Sign In / Create Account screen with custom branding
 │   ├── home/
-│   │   ├── home_screen.dart         # Main view with BottomNavigationBar
+│   │   ├── home_screen.dart         # Main view with BottomNavigationBar & search
 │   │   └── widgets/
 │   │       ├── monthly_summary_card.dart  # Monthly total and month switcher
 │   │       ├── category_chip_bar.dart     # Horizontal category filter chips
 │   │       └── expense_list_item.dart     # Expense tile with swipe-to-delete
 │   ├── expense/
-│   │   ├── add_edit_expense_screen.dart   # Add / Edit form screen
+│   │   ├── add_edit_expense_screen.dart   # Add / Edit form screen with category picker
 │   │   └── expense_details_modal.dart     # Bottom sheet detail modal
 │   ├── analytics/
 │   │   └── analytics_screen.dart    # Pie chart and category percentage bars
@@ -85,14 +88,14 @@ lib/
 
 | Package | Version | Purpose |
 | :--- | :--- | :--- |
-| **Flutter & Dart** | SDK >= 3.0.0 | Core mobile framework & language |
+| **Flutter & Dart** | SDK >= 3.0.0 | Core cross-platform mobile framework & language |
 | **provider** | `^6.1.2` | Clean, predictable reactive state management |
 | **firebase_core** | `^3.6.0` | Firebase initialization & cross-platform core |
 | **firebase_auth** | `^5.3.1` | User authentication (Email/Password & Anonymous) |
 | **cloud_firestore** | `^5.4.4` | Real-time NoSQL cloud database |
 | **fl_chart** | `^0.69.0` | Animated interactive Pie/Donut charts |
 | **intl** | `^0.19.0` | Date and currency formatting |
-| **shared_preferences** | `^2.3.2` | Local persistent storage for theme preference |
+| **shared_preferences** | `^2.3.2` | Persistent local storage for themes & isolated fallback |
 | **uuid** | `^4.5.1` | Unique ID generation |
 
 ---
@@ -103,10 +106,10 @@ In compliance with the internship guidelines regarding the effective use of mode
 
 - **AI Tools Used**: Google Antigravity & Gemini.
 - **How They Helped**:
-  1. **Architecture & Schema Design**: Designed a scalable feature-first structure with clean separation between UI, Providers, and Firebase Services.
+  1. **Architecture & Schema Design**: Designed a scalable clean architecture separating UI, Providers, and Firebase Services.
   2. **Code Quality & Best Practices**: Ensured adherence to modern Flutter Material 3 standards, null-safety, and robust form validation.
-  3. **Resilience & Edge Cases**: Formulated fallback mechanisms so the application gracefully handles both live Firebase credentials and offline/demo review mode.
-  4. **Documentation**: Generated comprehensive documentation, setup guides, and submission assets.
+  3. **Resilience & Offline Handling**: Formulated a robust fallback and per-user local storage mechanism so reviewers can test the app immediately without requiring live cloud credentials.
+  4. **Rapid Debugging & Asset Generation**: Promptly resolved platform installation constraints, configured release keystores, and designed custom app branding.
 
 ---
 
@@ -147,7 +150,7 @@ The app comes ready with Firebase integration. To connect your personal Firebase
 4. Add your Android app (package name: `com.cyphlab.expense_tracker`) and place the downloaded `google-services.json` in `android/app/google-services.json`.
    *(Or run `flutterfire configure` to generate `lib/firebase_options.dart`).*
 
-> **Note**: Even if Firebase credentials are not yet added, the app includes a fallback demo mode so you can immediately run and test the complete UI and CRUD actions!
+> **Note**: Even if Firebase credentials are not yet added, the app includes an automatic offline storage layer so you can immediately run and test the complete UI and CRUD actions!
 
 ### 5. Run the Application
 ```bash
@@ -167,12 +170,12 @@ The generated APK will be located at:
 
 ---
 
-## 📱 Application Flow & Screenshots
+## 📱 Application Flow & Walkthrough
 
-1. **Authentication Screen**: Clean sign-in / registration with a **"Continue as Guest (Instant Demo)"** button.
+1. **Authentication Screen**: Clean sign-in / registration tabs with a **"Continue as Guest (Instant Demo)"** button and autofill options.
 2. **Dashboard / Home**: Month selector with total expenses, category filter chips, search bar, and recent transactions.
-3. **Add & Edit Expense**: Form with title, amount, category picker, date picker, and note.
-4. **Analytics Tab**: Visual donut chart breakdown with percentage distribution for each category.
+3. **Add & Edit Expense**: Form with title, amount, category picker, date picker, and note. Pre-selects category based on active filter.
+4. **Analytics Tab**: Visual donut chart breakdown with percentage distribution and amounts for each category.
 5. **Settings Tab**: Switch between Dark and Light mode, view account status, and sign out.
 
 ---

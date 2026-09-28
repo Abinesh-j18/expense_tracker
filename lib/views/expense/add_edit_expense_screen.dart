@@ -11,8 +11,13 @@ import '../../widgets/custom_text_field.dart';
 
 class AddEditExpenseScreen extends StatefulWidget {
   final ExpenseModel? expense;
+  final String? initialCategoryId;
 
-  const AddEditExpenseScreen({super.key, this.expense});
+  const AddEditExpenseScreen({
+    super.key,
+    this.expense,
+    this.initialCategoryId,
+  });
 
   @override
   State<AddEditExpenseScreen> createState() => _AddEditExpenseScreenState();
@@ -40,9 +45,13 @@ class _AddEditExpenseScreenState extends State<AddEditExpenseScreen> {
     );
     _noteController = TextEditingController(text: widget.expense?.note ?? '');
 
-    _selectedCategory = widget.expense != null
-        ? AppCategories.getById(widget.expense!.categoryId)
-        : AppCategories.categories.first;
+    if (widget.expense != null) {
+      _selectedCategory = AppCategories.getById(widget.expense!.categoryId);
+    } else if (widget.initialCategoryId != null && widget.initialCategoryId!.isNotEmpty) {
+      _selectedCategory = AppCategories.getById(widget.initialCategoryId!);
+    } else {
+      _selectedCategory = AppCategories.categories.first;
+    }
 
     _selectedDate = widget.expense?.date ?? DateTime.now();
   }

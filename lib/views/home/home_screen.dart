@@ -95,56 +95,65 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: CustomScrollView(
         slivers: [
-          // Monthly Summary Banner
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(16, 16, 16, 12),
-              child: MonthlySummaryCard(),
+          // If searching, hide top summary banner & category chips so search results are prominent
+          if (expenseProvider.searchQuery.isEmpty) ...[
+            // Monthly Summary Banner
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(16, 16, 16, 12),
+                child: MonthlySummaryCard(),
+              ),
             ),
-          ),
 
-          // Horizontal Category Filter Chips
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: CategoryChipBar(),
+            // Horizontal Category Filter Chips
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: CategoryChipBar(),
+              ),
             ),
-          ),
-
-          // Active Filter Indication Banner (if date range is selected)
-          if (expenseProvider.selectedDateRange != null) ...[
+          ] else ...[
+            // Search Status Banner
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(12),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.search_rounded, size: 18, color: AppColors.primary),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Found ${filteredExpenses.length} result${filteredExpenses.length == 1 ? '' : 's'} across all expenses',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                          fontSize: 13,
+                        ),
                       ),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.date_range_rounded, size: 14, color: AppColors.primary),
-                          const SizedBox(width: 6),
-                          const Text(
-                            'Custom Date Filter Active',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.primary,
-                            ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          _searchController.clear();
+                          expenseProvider.setSearchQuery('');
+                          setState(() => _isSearching = false);
+                        },
+                        child: const Text(
+                          'Clear',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
                           ),
-                          const SizedBox(width: 4),
-                          GestureDetector(
-                            onTap: () => expenseProvider.setDateRange(null),
-                            child: const Icon(Icons.close, size: 14, color: AppColors.primary),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -196,7 +205,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const AddEditExpenseScreen(),
+                      builder: (_) => AddEditExpenseScreen(
+                        initialCategoryId: expenseProvider.selectedCategoryId,
+                      ),
                     ),
                   );
                 },
@@ -248,8 +259,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ? TextField(
                 controller: _searchController,
                 autofocus: true,
+                style: const TextStyle(fontSize: 16),
+                cursorColor: AppColors.primary,
                 decoration: const InputDecoration(
-                  hintText: 'Search expenses by title or note...',
+                  hintText: 'Search by title, note, category...',
+                  hintStyle: TextStyle(fontSize: 14, color: Colors.grey),
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -291,13 +305,15 @@ class _HomeScreenState extends State<HomeScreen> {
           const SettingsScreen(),
         ],
       ),
-      floatingActionButton: _currentTabIndex == 0
+      floatingActionButton: (_currentTabIndex == 0 && expenseProvider.filteredExpenses.isNotEmpty)
           ? FloatingActionButton.extended(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const AddEditExpenseScreen(),
+                    builder: (_) => AddEditExpenseScreen(
+                      initialCategoryId: expenseProvider.selectedCategoryId,
+                    ),
                   ),
                 );
               },

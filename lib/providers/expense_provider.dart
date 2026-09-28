@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../core/constants/app_categories.dart';
 import '../models/expense_model.dart';
 import '../services/firestore_service.dart';
 
@@ -53,8 +54,24 @@ class ExpenseProvider extends ChangeNotifier {
 
   // Filtered expenses based on selected month, category, date range, and search query
   List<ExpenseModel> get filteredExpenses {
+    final query = _searchQuery.trim().toLowerCase();
+
     return _allExpenses.where((expense) {
-      // 1. Month / Date Range Filter
+      // 1. Search Query Filter - when searching, search universally across all expenses & months
+      if (query.isNotEmpty) {
+        final matchesTitle = expense.title.toLowerCase().contains(query);
+        final matchesNote = expense.note?.toLowerCase().contains(query) ?? false;
+        final categoryName = AppCategories.getById(expense.categoryId).name.toLowerCase();
+        final matchesCategory = categoryName.contains(query);
+        final matchesAmount = expense.amount.toString().contains(query);
+
+        if (!matchesTitle && !matchesNote && !matchesCategory && !matchesAmount) {
+          return false;
+        }
+        return true;
+      }
+
+      // 2. Month / Date Range Filter (Applied when not actively searching)
       if (_selectedDateRange != null) {
         final start = DateTime(
           _selectedDateRange!.start.year,
@@ -80,20 +97,10 @@ class ExpenseProvider extends ChangeNotifier {
         }
       }
 
-      // 2. Category Filter
+      // 3. Category Filter
       if (_selectedCategoryId != null &&
           expense.categoryId.toLowerCase() != _selectedCategoryId!.toLowerCase()) {
         return false;
-      }
-
-      // 3. Search Query Filter
-      if (_searchQuery.trim().isNotEmpty) {
-        final query = _searchQuery.toLowerCase();
-        final matchesTitle = expense.title.toLowerCase().contains(query);
-        final matchesNote = expense.note?.toLowerCase().contains(query) ?? false;
-        if (!matchesTitle && !matchesNote) {
-          return false;
-        }
       }
 
       return true;
