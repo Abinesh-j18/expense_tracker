@@ -188,7 +188,7 @@ The generated APK will be located at:
 ---
 
 ## 👨‍💻 Developer Information
-- **Applicant**: Abinesh J. (Flutter Developer Intern Candidate)
+- **Applicant**: Abinesh S. (Flutter Developer Intern Candidate)
 - **Company**: CyphLab (Pvt) Ltd
 - **Role**: Mobile App Developer Intern – Flutter
 - **LinkedIn**: [linkedin.com/in/abinesh-s18](https://www.linkedin.com/in/abinesh-s18/)
