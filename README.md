@@ -104,7 +104,7 @@ lib/
 
 In compliance with the internship guidelines regarding the effective use of modern AI tools:
 
-- **AI Tools Used**: Google Antigravity & Gemini.
+- **AI Tools Used**: Chatgpt, Claude.ai , Google Antigravity & Gemini.
 - **How They Helped**:
   1. **Architecture & Schema Design**: Designed a scalable clean architecture separating UI, Providers, and Firebase Services.
   2. **Code Quality & Best Practices**: Ensured adherence to modern Flutter Material 3 standards, null-safety, and robust form validation.
