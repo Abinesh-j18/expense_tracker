@@ -6,6 +6,9 @@ class AuthService {
 
   AuthService({FirebaseAuth? auth}) : _auth = auth;
 
+  // Check if real Firebase Auth is available
+  bool get isFirebaseConfigured => _auth != null;
+
   // Stream of auth state changes
   Stream<User?> get authStateChanges {
     if (_auth == null) {

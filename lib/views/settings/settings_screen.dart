@@ -51,7 +51,7 @@ class SettingsScreen extends StatelessWidget {
                       Text(
                         user?.isAnonymous == true
                             ? 'Guest User'
-                            : (user?.email ?? 'Logged In User'),
+                            : (user?.email ?? authProvider.displayEmail),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

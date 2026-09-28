@@ -8,6 +8,9 @@ class AuthProvider extends ChangeNotifier {
   StreamSubscription<User?>? _authSubscription;
 
   User? _user;
+  bool _isDemoAuthenticated = false;
+  String _demoEmail = '';
+  String _demoUserId = 'demo_user_id';
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -16,10 +19,11 @@ class AuthProvider extends ChangeNotifier {
   }
 
   User? get user => _user;
-  bool get isAuthenticated => _user != null;
+  bool get isAuthenticated => (_user != null) || _isDemoAuthenticated;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
-  String get userId => _user?.uid ?? 'guest_user';
+  String get userId => _user?.uid ?? (_isDemoAuthenticated ? _demoUserId : 'guest_user');
+  String get displayEmail => _user?.email ?? (_isDemoAuthenticated ? _demoEmail : 'Guest User');
 
   void _init() {
     _authSubscription = _authService.authStateChanges.listen((User? user) {
@@ -39,6 +43,15 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      if (!_authService.isFirebaseConfigured) {
+        await Future.delayed(const Duration(milliseconds: 300));
+        _isDemoAuthenticated = true;
+        _demoEmail = 'Guest User';
+        _demoUserId = 'guest_${DateTime.now().millisecondsSinceEpoch}';
+        _isLoading = false;
+        notifyListeners();
+        return true;
+      }
       await _authService.signInAnonymously();
       _isLoading = false;
       notifyListeners();
@@ -57,6 +70,15 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      if (!_authService.isFirebaseConfigured) {
+        await Future.delayed(const Duration(milliseconds: 400));
+        _isDemoAuthenticated = true;
+        _demoEmail = email;
+        _demoUserId = 'user_${email.hashCode.abs()}';
+        _isLoading = false;
+        notifyListeners();
+        return true;
+      }
       await _authService.signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -78,6 +100,15 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      if (!_authService.isFirebaseConfigured) {
+        await Future.delayed(const Duration(milliseconds: 400));
+        _isDemoAuthenticated = true;
+        _demoEmail = email;
+        _demoUserId = 'user_${email.hashCode.abs()}';
+        _isLoading = false;
+        notifyListeners();
+        return true;
+      }
       await _authService.registerWithEmailAndPassword(
         email: email,
         password: password,
@@ -97,7 +128,11 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      await _authService.signOut();
+      if (_authService.isFirebaseConfigured) {
+        await _authService.signOut();
+      }
+      _isDemoAuthenticated = false;
+      _user = null;
     } catch (e) {
       _errorMessage = e.toString();
     } finally {
