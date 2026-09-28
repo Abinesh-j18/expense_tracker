@@ -38,6 +38,11 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.white,
+      hintStyle: const TextStyle(
+        color: AppColors.lightTextSecondary,
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+      ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -109,6 +114,11 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.darkSurface,
+      hintStyle: const TextStyle(
+        color: AppColors.darkTextSecondary,
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+      ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
