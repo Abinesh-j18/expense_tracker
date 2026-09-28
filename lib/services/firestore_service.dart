@@ -80,13 +80,15 @@ class FirestoreService {
   }
 
   // Real-time Stream of expenses for the given user
-  Stream<List<ExpenseModel>> getExpensesStream(String userId) {
+  Stream<List<ExpenseModel>> getExpensesStream(String userId) async* {
     if (_firestore == null) {
-      return _demoStreamController.stream;
+      yield List.from(_demoExpenses);
+      yield* _demoStreamController.stream;
+      return;
     }
 
     try {
-      return _userExpensesRef(userId)
+      yield* _userExpensesRef(userId)
           .orderBy('date', descending: true)
           .snapshots()
           .map((snapshot) {

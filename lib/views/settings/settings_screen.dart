@@ -51,7 +51,7 @@ class SettingsScreen extends StatelessWidget {
                       Text(
                         user?.isAnonymous == true
                             ? 'Guest User'
-                            : (user?.email ?? authProvider.displayEmail),
+                            : authProvider.displayName,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -60,8 +60,8 @@ class SettingsScreen extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         user?.isAnonymous == true
-                            ? 'Cloud Guest Session'
-                            : 'Firebase Authenticated',
+                            ? 'Instant Demo Session'
+                            : authProvider.displayEmail,
                         style: TextStyle(
                           fontSize: 12,
                           color: isDark
@@ -127,15 +127,15 @@ class SettingsScreen extends StatelessWidget {
                 color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
               ),
             ),
-            child: Column(
+            child: const Column(
               children: [
-                const ListTile(
+                ListTile(
                   leading: Icon(Icons.info_outline_rounded, color: AppColors.secondary),
                   title: Text('App Version'),
                   trailing: Text('1.0.0 (CyphLab Task)', style: TextStyle(fontWeight: FontWeight.w600)),
                 ),
-                const Divider(height: 1),
-                const ListTile(
+                Divider(height: 1),
+                ListTile(
                   leading: Icon(Icons.cloud_done_rounded, color: AppColors.accent),
                   title: Text('Backend'),
                   trailing: Text('Firebase Firestore & Auth', style: TextStyle(fontWeight: FontWeight.w600)),

@@ -8,6 +8,7 @@ class AppColors {
   
   static const Color secondary = Color(0xFF0EA5E9); // Sky
   static const Color accent = Color(0xFF10B981); // Emerald Green
+  static const Color success = Color(0xFF10B981); // Emerald Green
   static const Color danger = Color(0xFFEF4444); // Red
   static const Color warning = Color(0xFFF59E0B); // Amber
 
