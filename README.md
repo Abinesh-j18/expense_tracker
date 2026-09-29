@@ -177,13 +177,32 @@ The generated APK will be located at:
 
 ---
 
-## 📱 Application Flow & Walkthrough
+## 📱 Application Screenshots & UI Showcase
 
-1. **Authentication Screen**: Clean sign-in / registration tabs with a **"Continue as Guest (Instant Demo)"** button and autofill options.
-2. **Dashboard / Home**: Month selector with total expenses, category filter chips, search bar, and recent transactions.
-3. **Add & Edit Expense**: Form with title, amount, category picker, date picker, and note. Pre-selects category based on active filter.
-4. **Analytics Tab**: Visual donut chart breakdown with percentage distribution and amounts for each category.
-5. **Settings Tab**: Switch between Dark and Light mode, view account status, and sign out.
+### 🔐 1. Authentication & Security
+| Xiaomi Security Scan | Sign In Screen | Create Account Screen |
+| :---: | :---: | :---: |
+| <img src="screenshots/01_security_scan.jpg" width="240" alt="Security Scan" /> | <img src="screenshots/02_sign_in_dark.jpg" width="240" alt="Sign In Dark" /> | <img src="screenshots/03_create_account_dark.jpg" width="240" alt="Create Account Dark" /> |
+
+### 📊 2. Dashboard & Category Filtering
+| Home Dashboard (All) | Category Filtered (Food) | Expense Details Modal |
+| :---: | :---: | :---: |
+| <img src="screenshots/04_home_dashboard_dark.jpg" width="240" alt="Home Dashboard Dark" /> | <img src="screenshots/05_category_filtered_dark.jpg" width="240" alt="Filtered Food & Dining" /> | <img src="screenshots/10_expense_details_modal.jpg" width="240" alt="Expense Details Modal" /> |
+
+### ➕ 3. Expense Creation & Date Picker
+| Add Expense Form | Material Date Picker |
+| :---: | :---: |
+| <img src="screenshots/06_add_expense_form.jpg" width="240" alt="Add Expense Form" /> | <img src="screenshots/07_date_picker_dialog.jpg" width="240" alt="Date Picker Dialog" /> |
+
+### 📈 4. Expense Analytics & Breakdown
+| Interactive Donut Chart | Category Budget Bars |
+| :---: | :---: |
+| <img src="screenshots/08_analytics_donut_chart.jpg" width="240" alt="Analytics Donut Chart" /> | <img src="screenshots/09_category_breakdown_bars.jpg" width="240" alt="Category Breakdown Bars" /> |
+
+### 🌓 5. Light Theme & Settings
+| Home Dashboard (Light) | Settings (Light Mode) | Settings & Profile (Dark) |
+| :---: | :---: | :---: |
+| <img src="screenshots/12_home_dashboard_light.jpg" width="240" alt="Home Light Theme" /> | <img src="screenshots/13_settings_profile_light.jpg" width="240" alt="Settings Light Mode" /> | <img src="screenshots/11_settings_profile_dark.jpg" width="240" alt="Settings Dark Mode" /> |
 
 ---
 
